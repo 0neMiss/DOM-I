@@ -42,37 +42,64 @@ let logo = document.getElementById("logo-img");
 logo.setAttribute('src', siteContent["nav"]["img-src"]);
 //anchor tags
 let anchor = document.querySelectorAll('a');
-const a_names = ["Services", "Product", "Vision", "Features", "About", "Contract"];
+let nav = document.querySelector('nav')
+let try_now = document.createTextNode('try now');
+let or_dont = document.createTextNode('or dont');
+const a_names = Object.values(siteContent["nav"]);
 anchor.forEach(item => item.textContent = a_names.shift());
+anchor.forEach(item => item.style.color = "green");
+nav.appendChild(try_now);
+nav.prepend(or_dont);
 //h1
 let h1 = document.querySelector('h1');
-h1.innerHTML = "DOM <br> Is <br> Awesome";
+h1.innerHTML = siteContent.cta.h1.replace("DOM Is", "DOM <br> Is <br>");
 //button
-let button = document.querySelector('button');
-button.textContent = "Get Started";
+let button = document.querySelector('button')
+button.innerHTML = siteContent.cta.button;
 //cta-Image
 let cta_img = document.querySelector("#cta-img");
-cta_img.setAttribute('src', "img/header-img.png");
+let imgsrc = siteContent.cta["img-src"];
+cta_img.setAttribute('src', imgsrc);
 //middle-img
 let middle_img = document.querySelector(".middle-img");
-middle_img.setAttribute('src', "img/mid-page-accent.jpg");
-//textcontent h4
+middle_img.setAttribute('src', siteContent["main-content"]["middle-img-src"]);
+//textcontent h4 and textContent p
 let h4 = document.querySelectorAll('h4');
-const h4_names = ["Features", "About", "Services", "Product", "Vision" ];
-h4.forEach(item => item.textContent = h4_names.shift());
-// .text-contentp
+let main_content_array = Object.values(siteContent["main-content"]);
+let main_content_h4 = [];
+let main_content_p = [];
+main_content_array.splice(4, 1);
+
+for (i = 0; i < main_content_array.length; i++) {
+  if (main_content_array[i].length <= 8) {
+    main_content_h4.push(main_content_array[i]);
+  }
+
+  else {
+    main_content_p.push(main_content_array[i]);
+  }
+}
+
+h4.forEach(item => item.textContent = main_content_h4.shift());
 let bottom_content_p = document.querySelectorAll('.text-content p');
-const bottom_content_p_names = ["Features content elementum magna eros, ac posuere elvit tempus et. Suspendisse vel tempus odio, in interdutm nisi. Suspendisse eu ornare nisl. Nullam convallis augue justo, at imperdiet metus scelerisque quis.", "About content elementum magna eros, ac posuere elvit tempus et. Suspendisse vel tempus odio, in interdutm nisi. Suspendisse eu ornare nisl. Nullam convallis augue justo, at imperdiet metus scelerisque quis.", "Services content elementum magna eros, ac posuere elvit tempus et. Suspendisse vel tempus odio, in interdutm nisi. Suspendisse eu ornare nisl. Nullam convallis augue justo, at imperdiet metus scelerisque quis.", "Product content elementum magna eros, ac posuere elvit tempus et. Suspendisse vel tempus odio, in interdutm nisi. Suspendisse eu ornare nisl. Nullam convallis augue justo, at imperdiet metus scelerisque quis.", "Vision content elementum magna eros, ac posuere elvit tempus et. Suspendisse vel tempus odio, in interdutm nisi. Suspendisse eu ornare nisl. Nullam convallis augue justo, at imperdiet metus scelerisque quis." ];
-bottom_content_p.forEach(item => item.textContent = bottom_content_p_names.shift());
+bottom_content_p.forEach(item => item.textContent = main_content_p.shift());
 //Contact
 let contact_h4 = document.querySelector('.contact h4');
 let contact_p = document.querySelectorAll('.contact p');
-const contact_text = [`123 Way 456 Street<br>
-Somewhere, USA`, "Services", "1 (888) 888-8888", "sales@greatidea.io" ];
-console.log(contact_h4);
-contact_h4.textContent = 'Contact';
-contact_p.forEach(item => item.innerHTML = contact_text.shift());
+const contact_text = Object.values(siteContent["contact"]);
+let contact_h4_name =""
+let contact_p_array =[]
+for (i = 0; i < contact_text.length; i++) {
+  if (contact_text[i] == contact_text[0]) {
+    contact_h4_name =contact_text[i];
+  }
 
+  else {
+    contact_p_array.push(contact_text[i]);
+  }
+}
+contact_h4.textContent = contact_h4_name;
+contact_p.forEach(item => item.innerHTML = contact_p_array.shift());
 //footer
 let footer = document.querySelector('footer');
-footer.textContent = 'Copyright Great Idea! 2018';
+footer.textContent = siteContent["footer"]["copyright"];
